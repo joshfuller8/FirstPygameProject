@@ -26,6 +26,7 @@ background = SKY
 
 # create a player class
 class PlayerCharacter:
+    """ This is the class that contains all the player data """
 
     def __init__(self, sprite):
         # positional and data
@@ -36,7 +37,7 @@ class PlayerCharacter:
         self.sprite = pygame.transform.scale(sprite, (self.width, self.height))
         # character stats
         self.vel_x = 10
-        self.vel_y = 20
+        self.vel_y = 25
         self.jump_height = 25
         self.can_jump = True
 
@@ -48,11 +49,8 @@ class PlayerCharacter:
 FPS = 60
 
 # sprite constants
-# mage_image_file = pygame.image.load(os.path.join('Assets', 'amg1_fr1.gif'))
-# mage = pygame.transform.scale(mage_image_file, (200, 200))
-
-
 player = PlayerCharacter(pygame.image.load(os.path.join('Assets', 'Lucas.jpg')))
+
 # size and position of ground as a constant
 GROUND = pygame.Rect(0, player.height + 500, WIDTH, HEIGHT)
 
@@ -98,7 +96,6 @@ def main():
                     player.vel_y = player.jump_height
         # #######################
 
-
         # move character to the left equal to character velocity
         if user_input[pygame.K_LEFT] or user_input[pygame.K_a]:
             player.x -= player.vel_x
@@ -107,9 +104,19 @@ def main():
         if user_input[pygame.K_RIGHT] or user_input[pygame.K_d]:
             player.x += player.vel_x
 
+        # define boundaries
+        if player.y < 0:
+            player.y = 0
+        if player.x < 0:
+            player.x = 0
+        if player.y > 1080 - player.height:
+            player.y = 1080 - player.height
+        if player.x > 1920 - player.width:
+            player.x = 1920 - player.width
         # update the window
         draw_window()
     pygame.quit()
 
 
-main()
+if __name__ == "__main__":
+    main()
