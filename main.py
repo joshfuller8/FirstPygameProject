@@ -30,8 +30,8 @@ class PlayerCharacter:
 
     def __init__(self, sprite):
         # positional and data
-        self.x = 500
-        self.y = 500
+        self.pos_x = 500
+        self.pos_y = 500
         self.width = 200
         self.height = 200
         self.sprite = pygame.transform.scale(sprite, (self.width, self.height))
@@ -59,7 +59,7 @@ GROUND = pygame.Rect(0, player.height + 500, WIDTH, HEIGHT)
 def draw_window():
     SCREEN.fill(background)
     pygame.draw.rect(SCREEN, GRASS, GROUND)
-    SCREEN.blit(player.sprite, (player.x, player.y))
+    SCREEN.blit(player.sprite, (player.pos_x, player.pos_y))
     pygame.display.update()
 
 
@@ -83,37 +83,37 @@ def main():
         # needs work
         # jump physics
         if user_input[pygame.K_SPACE] and player.can_jump:
-            player.y -= player.vel_y / 2
+            player.pos_y -= player.vel_y / 2
             player.vel_y -= 1
         if player.vel_y == 0 or not user_input[pygame.K_SPACE]:
             player.can_jump = False
         if not player.can_jump:
-            player.y += player.vel_y / 2
+            player.pos_y += player.vel_y / 2
             player.vel_y += 1
-            if player.y > 500:
-                player.y = 500
-                if player.y == 500 and not user_input[pygame.K_SPACE]:
+            if player.pos_y > 500:
+                player.pos_y = 500
+                if player.pos_y == 500 and not user_input[pygame.K_SPACE]:
                     player.can_jump = True
                     player.vel_y = player.jump_height
         # #######################
 
         # move character to the left equal to character velocity
         if user_input[pygame.K_LEFT] or user_input[pygame.K_a]:
-            player.x -= player.vel_x
+            player.pos_x -= player.vel_x
 
         # move character to the right equal to character velocity
         if user_input[pygame.K_RIGHT] or user_input[pygame.K_d]:
-            player.x += player.vel_x
+            player.pos_x += player.vel_x
 
-        # define boundaries
-        if player.y < 0:
-            player.y = 0
-        if player.x < 0:
-            player.x = 0
-        if player.y > 1080 - player.height:
-            player.y = 1080 - player.height
-        if player.x > 1920 - player.width:
-            player.x = 1920 - player.width
+        # define boundaries of screen where player cannot pass
+        if player.pos_y < 0:
+            player.pos_y = 0
+        if player.pos_x < 0:
+            player.pos_x = 0
+        if player.pos_y > 1080 - player.height:
+            player.pos_y = 1080 - player.height
+        if player.pos_x > 1920 - player.width:
+            player.pos_x = 1920 - player.width
         # update the window
         draw_window()
     pygame.quit()
