@@ -79,8 +79,9 @@ def main():
         # define key presses / controls
         user_input = pygame.key.get_pressed()
 
-        # needs work    ############################################
-        # jump
+        # ###########################################
+        # needs work
+        # jump physics
         if user_input[pygame.K_SPACE] and player.can_jump:
             player.y -= player.vel_y / 2
             player.vel_y -= 1
@@ -121,5 +122,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-# test 2
